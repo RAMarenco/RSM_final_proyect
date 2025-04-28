@@ -1,9 +1,17 @@
-﻿using NorthWindTraders.Domain.Interfaces;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using NorthWindTraders.Domain.Entities;
+using NorthWindTraders.Domain.Interfaces;
 using NorthWindTraders.Infra.Persistence;
 
 namespace NorthWindTraders.Infra.Repositories
 {
-    public class ProductRepository(AppDbContext context) : IProductRepository
+    public class ProductRepository(AppDbContext context, IMapper mapper) : IProductRepository
     {
+        public async Task<IEnumerable<Product>> GetAllProducts()
+        {
+            var productModel = await context.Products.ToListAsync();
+            return mapper.Map<IEnumerable<Product>>(productModel);
+        }
     }
 }

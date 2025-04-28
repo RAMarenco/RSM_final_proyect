@@ -1,4 +1,6 @@
-﻿namespace NorthWindTraders.Domain.Entities
+﻿using System.Text.Json.Serialization;
+
+namespace NorthWindTraders.Domain.Entities
 {
     public class Shipper
     {

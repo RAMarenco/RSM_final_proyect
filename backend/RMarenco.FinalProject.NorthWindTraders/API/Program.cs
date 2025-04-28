@@ -1,5 +1,5 @@
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using NorthWindTraders.Application;
 using NorthWindTraders.Infra;
 using NorthWindTraders.Infra.Persistence;
 
@@ -9,6 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.Configure<ScriptSettings>(
     builder.Configuration.GetSection("ScriptSettings"));
+builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

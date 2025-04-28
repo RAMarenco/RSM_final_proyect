@@ -19,8 +19,4 @@
     <ProjectReference Include="..\Infra\NorthWindTraders.Infra\NorthWindTraders.Infra.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
 </Project>

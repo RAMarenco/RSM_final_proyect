@@ -1,8 +1,8 @@
 ﻿using NorthWindTraders.Domain.Entities;
 
-namespace NorthWindTraders.Domain.Interfaces
+namespace NorthWindTraders.Application.Interfaces
 {
-    public interface IShipperRepository
+    public interface IShipperService
     {
         Task<IEnumerable<Shipper>> GetAllShippers();
     }

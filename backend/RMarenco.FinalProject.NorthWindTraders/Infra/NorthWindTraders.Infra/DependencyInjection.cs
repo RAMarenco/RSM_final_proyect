@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NorthWindTraders.Domain.Interfaces;
 using NorthWindTraders.Infra.Repositories;
+using NorthWindTraders.Infra.MappingProfiles;
 
 namespace NorthWindTraders.Infra
 {
@@ -13,10 +14,14 @@ namespace NorthWindTraders.Infra
         {
             services.AddDbContext<AppDbContext>(options =>
             {
-                options.UseSqlServer(configuration.GetConnectionString("NorthwindDbConnection"),
-                    opt => opt.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName));
+                options.UseSqlServer(configuration.GetConnectionString("NorthwindDbConnection"));
             });
 
+            // AutoMapper Profiles
+            services.AddAutoMapper(typeof(ShipperProfile));
+            services.AddAutoMapper(typeof(ProductProfile));
+
+            // Repositories
             services.AddTransient<ICustomerRepository, CustomerRepository>();
             services.AddTransient<IEmployeeRepository, EmployeeRepository>();
             services.AddTransient<IOrderRepository, OrderRepository>();
