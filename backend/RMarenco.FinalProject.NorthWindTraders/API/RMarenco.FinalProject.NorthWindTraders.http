@@ -1,0 +1,6 @@
+@RMarenco.FinalProject.NorthWindTraders_HostAddress = http://localhost:5073
+
+GET {{RMarenco.FinalProject.NorthWindTraders_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
