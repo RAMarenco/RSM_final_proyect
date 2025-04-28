@@ -19,9 +19,5 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Core\NorthWindTraders.Domain\NorthWindTraders.Domain.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Persistence\Configuration\" />
-  </ItemGroup>
   
 </Project>

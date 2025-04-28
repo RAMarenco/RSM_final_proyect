@@ -18,8 +18,12 @@ namespace NorthWindTraders.Infra
             });
 
             // AutoMapper Profiles
-            services.AddAutoMapper(typeof(ShipperProfile));
+            services.AddAutoMapper(typeof(CustomerProfile));
+            services.AddAutoMapper(typeof(EmployeeProfile));
+            services.AddAutoMapper(typeof(OrderProfile));
+            services.AddAutoMapper(typeof(OrderDetailProfile));
             services.AddAutoMapper(typeof(ProductProfile));
+            services.AddAutoMapper(typeof(ShipperProfile));
 
             // Repositories
             services.AddTransient<ICustomerRepository, CustomerRepository>();

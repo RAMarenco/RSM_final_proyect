@@ -1,4 +1,7 @@
-﻿namespace NorthWindTraders.Domain.Entities
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
+
+namespace NorthWindTraders.Domain.Entities
 {
     public class Order
     {

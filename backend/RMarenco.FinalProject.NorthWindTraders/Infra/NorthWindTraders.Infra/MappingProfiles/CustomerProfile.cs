@@ -4,11 +4,11 @@ using Model = NorthWindTraders.Infra.Persistence.Models;
 
 namespace NorthWindTraders.Infra.MappingProfiles
 {
-    class ProductProfile : Profile
+    class CustomerProfile : Profile
     {
-        public ProductProfile()
+        public CustomerProfile()
         {
-            CreateMap<Model.Product, Entity.Product>();
+            CreateMap<Model.Customer, Entity.Customer>();
         }
     }
 }

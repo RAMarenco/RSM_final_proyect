@@ -1,6 +1,13 @@
-﻿namespace NorthWindTraders.Domain.Interfaces
+﻿using NorthWindTraders.Domain.Entities;
+
+namespace NorthWindTraders.Domain.Interfaces
 {
     public interface IOrderRepository
     {
+        Task<(IEnumerable<Order> Orders, int TotalPages, int CurrentPage, int TotalItems)> GetAllOrders(int pageNumber, int pageSize);
+        Task<Order> GetOrderById(int orderId);
+        Task AddOrder(Order order);
+        Task DeleteOrder(Order order);
     }
 }
+

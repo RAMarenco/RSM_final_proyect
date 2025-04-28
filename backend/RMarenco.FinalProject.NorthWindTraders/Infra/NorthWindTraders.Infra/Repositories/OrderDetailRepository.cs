@@ -3,7 +3,7 @@ using NorthWindTraders.Infra.Persistence;
 
 namespace NorthWindTraders.Infra.Repositories
 {
-    class OrderDetailRepository(AppDbContext context) : IOrderDetailRepository
+    public class OrderDetailRepository(AppDbContext context) : IOrderDetailRepository
     {
     }
 }

@@ -4,11 +4,11 @@ using NorthWindTraders.Domain.Interfaces;
 
 namespace NorthWindTraders.Application.Services
 {
-    public class ProductService(IProductRepository shipperRepository) : IProductService
+    public class ProductService(IProductRepository orderRepository) : IProductService
     {
         public async Task<IEnumerable<Product>> GetAllProducts()
         {
-            return await shipperRepository.GetAllProducts();
+            return await orderRepository.GetAllProducts();
         }
     }
 }

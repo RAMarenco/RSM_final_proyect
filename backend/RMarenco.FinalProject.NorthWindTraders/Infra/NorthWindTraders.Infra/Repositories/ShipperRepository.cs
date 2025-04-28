@@ -6,7 +6,7 @@ using NorthWindTraders.Infra.Persistence;
 
 namespace NorthWindTraders.Infra.Repositories
 {
-    class ShipperRepository(AppDbContext context, IMapper mapper) : IShipperRepository
+    public class ShipperRepository(AppDbContext context, IMapper mapper) : IShipperRepository
     {
         public async Task<IEnumerable<Shipper>> GetAllShippers()
         {

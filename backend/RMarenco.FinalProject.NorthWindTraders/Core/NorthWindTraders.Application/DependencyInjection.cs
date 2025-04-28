@@ -8,6 +8,7 @@ namespace NorthWindTraders.Application
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
+            services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IShipperService, ShipperService>();
             services.AddScoped<IProductService, ProductService>();
             return services;

@@ -1,4 +1,6 @@
-﻿namespace NorthWindTraders.Domain.Entities
+﻿using System.Text.Json.Serialization;
+
+namespace NorthWindTraders.Domain.Entities
 {
     public class Employee
     {
@@ -6,6 +8,7 @@
         public required string LastName { get; set; }
         public required string FirstName { get; set; }
         public required string Photo { get; set; }
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public List<Order> Order { get; set; }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using InfraShipper = NorthWindTraders.Infra.Persistence.Models.Shipper;
-using DomainShipper = NorthWindTraders.Domain.Entities.Shipper;
+using Entity = NorthWindTraders.Domain.Entities;
+using Model = NorthWindTraders.Infra.Persistence.Models;
 
 namespace NorthWindTraders.Infra.MappingProfiles
 {
@@ -8,7 +8,7 @@ namespace NorthWindTraders.Infra.MappingProfiles
     {
         public ShipperProfile()
         {
-            CreateMap<InfraShipper, DomainShipper>();
+            CreateMap<Model.Shipper, Entity.Shipper>();
         }
     }
 }
