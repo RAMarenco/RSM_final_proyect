@@ -4,18 +4,18 @@ using Entity = NorthWindTraders.Domain.Entities;
 using Model = NorthWindTraders.Infra.Persistence.Models;
 using NorthWindTraders.Domain.Interfaces;
 using NorthWindTraders.Infra.Persistence;
-using NorthWindTraders.Domain.Entities;
-using NorthWindTraders.Infra.Persistence.Models;
 
 namespace NorthWindTraders.Infra.Repositories
 {
-    public class OrderRepository(AppDbContext context, IMapper mapper) : IOrderRepository
+    public class OrderRepository(AppDbContext context, IMapper mapper, IPaginationHelper paginationHelper) : IOrderRepository
     {
-        public async Task AddOrder(Entity.Order order)
+        public async Task<Entity.Order> AddOrder(Entity.Order order)
         {
             var orderModel = mapper.Map<Model.Order>(order);
             context.Orders.Add(orderModel);
             await context.SaveChangesAsync();
+            
+            return mapper.Map<Entity.Order>(orderModel);
         }
 
         public async Task DeleteOrder(Entity.Order order)
@@ -38,24 +38,10 @@ namespace NorthWindTraders.Infra.Repositories
                 .Include(o => o.ShipViaNavigation)
                 .AsQueryable();
 
-            pageNumber = Math.Abs(pageNumber);
-
-            var totalItems = await orderQuery.CountAsync();
-            var totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
-
-            if (pageNumber > totalPages)
-            {
-                pageNumber = totalPages == 0 ? 1 : totalPages;
-            }
-
-            var pagedOrders = await orderQuery
-                .Skip((pageNumber - 1) * pageSize)
-                .Take(pageSize)
-                .ToListAsync();
-
+            var (pagedOrders, totalPages, currentPage, totalItems) = await paginationHelper.PaginateAsync(pageNumber, pageSize, orderQuery);
             var mappedOrders = mapper.Map<IEnumerable<Entity.Order>>(pagedOrders);
 
-            return (mappedOrders, totalPages, pageNumber, totalItems);
+            return (mappedOrders, totalPages, currentPage, totalItems);
         }
 
         public async Task<Entity.Order> GetOrderById(int orderId)

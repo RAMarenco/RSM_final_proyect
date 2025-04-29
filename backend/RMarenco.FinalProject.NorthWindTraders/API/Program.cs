@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Options;
+using NorthWindTraders.Api.Middlewares;
 using NorthWindTraders.Application;
 using NorthWindTraders.Infra;
 using NorthWindTraders.Infra.Persistence;
@@ -38,6 +39,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseMiddleware<ExceptionMiddleware>();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

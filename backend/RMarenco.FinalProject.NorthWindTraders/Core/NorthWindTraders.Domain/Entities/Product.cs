@@ -4,6 +4,6 @@
     {
         public int ProductID { get; set; }
         public required string ProductName { get; set; }
-        public required string UnitPrice { get; set; }
+        public required decimal UnitPrice { get; set; }
     }
 }

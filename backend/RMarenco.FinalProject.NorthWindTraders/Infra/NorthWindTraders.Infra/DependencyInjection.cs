@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using NorthWindTraders.Domain.Interfaces;
 using NorthWindTraders.Infra.Repositories;
 using NorthWindTraders.Infra.MappingProfiles;
+using NorthWindTraders.Infra.Helpers;
 
 namespace NorthWindTraders.Infra
 {
@@ -32,6 +33,9 @@ namespace NorthWindTraders.Infra
             services.AddTransient<IOrderDetailRepository, OrderDetailRepository>();
             services.AddTransient<IProductRepository, ProductRepository>();
             services.AddTransient<IShipperRepository, ShipperRepository>();
+
+            // Register PaginationHelper for Dependency Injection
+            services.AddTransient<IPaginationHelper, PaginationHelper>();
 
             return services;
         }

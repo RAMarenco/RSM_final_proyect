@@ -8,7 +8,8 @@ namespace NorthWindTraders.Infra.MappingProfiles
     {
         public OrderDetailProfile()
         {
-            CreateMap<Model.OrderDetail, Entity.OrderDetail>();
+            CreateMap<Model.OrderDetail, Entity.OrderDetail>()
+                .ReverseMap();
         }
     }
 }

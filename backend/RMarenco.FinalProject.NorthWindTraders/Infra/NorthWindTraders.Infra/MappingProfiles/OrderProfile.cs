@@ -9,9 +9,12 @@ namespace NorthWindTraders.Infra.MappingProfiles
         public OrderProfile()
         {
             CreateMap<Model.Order, Entity.Order>()
-                .ForMember(dest => dest.Shipper, opt => opt.MapFrom(src => src.ShipViaNavigation))
-                .ReverseMap()
-                .ForMember(dest => dest.ShipViaNavigation, opt => opt.MapFrom(src => src.Shipper));
+                .ForMember(dest => dest.Shipper, opt => opt.MapFrom(src => src.ShipViaNavigation));
+
+            CreateMap<Entity.Order, Model.Order>()
+                .ForMember(dest => dest.ShipViaNavigation, opt => opt.Ignore())
+                .ForMember(dest => dest.Customer, opt => opt.Ignore())
+                .ForMember(dest => dest.Employee, opt => opt.Ignore());
         }
     }
 }

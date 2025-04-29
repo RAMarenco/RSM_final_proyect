@@ -13,5 +13,13 @@ namespace NorthWindTraders.Infra.Repositories
             var productModel = await context.Products.ToListAsync();
             return mapper.Map<IEnumerable<Product>>(productModel);
         }
+
+        public async Task<Product> GetProductById(int productId)
+        {
+            var productModel = await context.Products
+                .FirstOrDefaultAsync(e => e.ProductId == productId);
+
+            return mapper.Map<Product>(productModel);
+        }
     }
 }

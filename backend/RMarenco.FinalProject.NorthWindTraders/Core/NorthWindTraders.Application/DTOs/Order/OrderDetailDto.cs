@@ -1,12 +1,10 @@
-﻿namespace NorthWindTraders.Domain.Entities
+﻿namespace NorthWindTraders.Application.DTOs.Order
 {
-    public class OrderDetail
+    public class OrderDetailDto
     {
         public int OrderID { get; set; }
         public int ProductID { get; set; }
         public decimal UnitPrice { get; set; }
         public int Quantity { get; set; }
-        public Order Order { get; set; }
-        public Product Product { get; set; }
     }
 }

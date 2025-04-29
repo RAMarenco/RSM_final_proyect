@@ -7,7 +7,7 @@ namespace NorthWindTraders.Domain.Entities
         public int EmployeeID { get; set; }
         public required string LastName { get; set; }
         public required string FirstName { get; set; }
-        public required string Photo { get; set; }
+        public required byte[] Photo { get; set; }
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public List<Order> Order { get; set; }
     }

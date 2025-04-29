@@ -1,8 +1,7 @@
-﻿namespace NorthWindTraders.Domain.Entities
+﻿namespace NorthWindTraders.Application.DTOs.Order
 {
-    public class Order
+    public class CreateOrderDto
     {
-        public int OrderID { get; set; }
         public string CustomerID { get; set; }
         public int EmployeeID { get; set; }
         public DateTime OrderDate { get; set; }
@@ -12,8 +11,12 @@
         public string ShipRegion { get; set; }
         public string ShipPostalCode { get; set; }
         public string ShipCountry { get; set; }
-        public Customer Customer { get; set; }
-        public Employee Employee { get; set; }
-        public Shipper Shipper { get; set; }
+        public List<OrderItemDto> Products { get; set; } = [];
+    }
+
+    public class OrderItemDto
+    {
+        public int ProductId { get; set; }
+        public short Quantity { get; set; }
     }
 }
