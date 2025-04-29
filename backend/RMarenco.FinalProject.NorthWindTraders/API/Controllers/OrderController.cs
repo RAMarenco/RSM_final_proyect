@@ -1,6 +1,5 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
-using NorthWindTraders.Application.DTOs;
+﻿using Microsoft.AspNetCore.Mvc;
+using NorthWindTraders.Application.CustomExceptions;
 using NorthWindTraders.Application.DTOs.Order;
 using NorthWindTraders.Application.Interfaces;
 
@@ -8,12 +7,20 @@ namespace NorthWindTraders.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class OrderController(IOrderService orderService, IOrderDetailService orderDetailService) : ControllerBase
+    public class OrderController(IOrderService orderService) : ControllerBase
     {
         [HttpPost]
         [Produces("application/json")]
         public async Task<IActionResult> CreateOrder([FromBody] CreateOrderDto createOrderDto)
         {
+            if (!ModelState.IsValid)
+            {
+                var errorMessages = ModelState.Values
+                   .SelectMany(v => v.Errors)
+                   .Select(e => e.ErrorMessage)
+                   .ToList();
+                throw new BadRequestException("Validation errors occurred.", errorMessages);
+            }
             return Ok($"Order: {await orderService.AddOrder(createOrderDto)} added successfully");
         }
 
@@ -30,6 +37,14 @@ namespace NorthWindTraders.Api.Controllers
         public async Task<IActionResult> GetOrderById([FromRoute] int id)
         {
             return Ok(await orderService.GetOrderWithDetails(id));
+        }
+
+        [HttpPut]
+        [Route("{id:int}")]
+        [Produces("application/json")]
+        public async Task<IActionResult> UpdateOrder([FromRoute] int id, [FromBody] UpdateOrderDto updateOrderDto)
+        {
+            return Ok($"Order: {await orderService.UpdateOrder(id, updateOrderDto)} updated successfully");
         }
 
         [HttpDelete]

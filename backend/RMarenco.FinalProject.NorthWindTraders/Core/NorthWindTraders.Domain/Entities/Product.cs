@@ -3,7 +3,7 @@
     public class Product
     {
         public int ProductID { get; set; }
-        public required string ProductName { get; set; }
-        public required decimal UnitPrice { get; set; }
+        public string ProductName { get; set; }
+        public decimal UnitPrice { get; set; }
     }
 }

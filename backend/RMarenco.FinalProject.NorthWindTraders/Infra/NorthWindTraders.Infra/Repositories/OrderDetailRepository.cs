@@ -20,8 +20,9 @@ namespace NorthWindTraders.Infra.Repositories
         public async Task<IEnumerable<OrderDetail>> GetOrderDetailsByOrderId(int orderId)
         {
             var orderDetailModel = await context.OrderDetails
-                .Where(od => od.OrderId == orderId)
                 .Include(od => od.Product)
+                .AsNoTracking()
+                .Where(od => od.OrderId == orderId)
                 .ToListAsync();
 
             return mapper.Map<IEnumerable<OrderDetail>>(orderDetailModel);
@@ -30,6 +31,7 @@ namespace NorthWindTraders.Infra.Repositories
         public async Task DeleteOrderDetail(Entity.Order order)
         {
             var orderDetailModel = await context.OrderDetails
+                .AsNoTracking()
                 .Where(od => od.OrderId == order.OrderID)
                 .ToListAsync();
 

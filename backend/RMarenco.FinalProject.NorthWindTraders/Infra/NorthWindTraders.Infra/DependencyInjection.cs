@@ -4,8 +4,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NorthWindTraders.Domain.Interfaces;
 using NorthWindTraders.Infra.Repositories;
-using NorthWindTraders.Infra.MappingProfiles;
 using NorthWindTraders.Infra.Helpers;
+using NorthWindTraders.Infra.MappingProfiles;
 
 namespace NorthWindTraders.Infra
 {
@@ -36,6 +36,7 @@ namespace NorthWindTraders.Infra
 
             // Register PaginationHelper for Dependency Injection
             services.AddTransient<IPaginationHelper, PaginationHelper>();
+
 
             return services;
         }

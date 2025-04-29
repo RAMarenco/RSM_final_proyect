@@ -10,13 +10,17 @@ namespace NorthWindTraders.Infra.Repositories
     {
         public async Task<IEnumerable<Customer>> GetAllCustomers()
         {
-            var customerModel = await context.Products.ToListAsync();
+            var customerModel = await context.Customers
+                .AsNoTracking()
+                .ToListAsync();
+
             return mapper.Map<IEnumerable<Customer>>(customerModel);
         }
 
         public async Task<Customer> GetCustomerById(string customerId)
         {
             var customerModel = await context.Customers
+                .AsNoTracking()
                 .FirstOrDefaultAsync(c => c.CustomerId == customerId);
 
             return mapper.Map<Customer>(customerModel);

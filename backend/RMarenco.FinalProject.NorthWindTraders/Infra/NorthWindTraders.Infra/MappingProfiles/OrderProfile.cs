@@ -9,7 +9,9 @@ namespace NorthWindTraders.Infra.MappingProfiles
         public OrderProfile()
         {
             CreateMap<Model.Order, Entity.Order>()
-                .ForMember(dest => dest.Shipper, opt => opt.MapFrom(src => src.ShipViaNavigation));
+                .ForMember(dest => dest.Shipper, opt => opt.MapFrom(src => src.ShipViaNavigation))
+                .PreserveReferences()
+                .MaxDepth(2);
 
             CreateMap<Entity.Order, Model.Order>()
                 .ForMember(dest => dest.ShipViaNavigation, opt => opt.Ignore())

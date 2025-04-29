@@ -18,6 +18,15 @@ namespace NorthWindTraders.Infra.Repositories
             return mapper.Map<Entity.Order>(orderModel);
         }
 
+        public async Task<Entity.Order> UpdateOrder(Entity.Order order)
+        {
+            var orderModel = mapper.Map<Model.Order>(order);
+            context.Orders.Update(orderModel);
+            await context.SaveChangesAsync();
+
+            return mapper.Map<Entity.Order>(orderModel);
+        }
+
         public async Task DeleteOrder(Entity.Order order)
         {
             var orderModel = await context.Orders
@@ -50,9 +59,46 @@ namespace NorthWindTraders.Infra.Repositories
                 .Include(o => o.Customer)
                 .Include(o => o.Employee)
                 .Include(o => o.ShipViaNavigation)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(o => o.OrderId == orderId);
 
             return mapper.Map<Entity.Order>(orderModel);
+        }
+
+        public async Task<IEnumerable<Entity.Order>> GetOrderByCustomerId(string customerId)
+        {
+            var orderModel = await context.Orders
+                .Include(o => o.Employee)
+                .Include(o => o.ShipViaNavigation)
+                .AsNoTracking()
+                .Where(o => o.CustomerId == customerId)
+                .ToListAsync();
+
+            return mapper.Map<IEnumerable<Entity.Order>>(orderModel);
+        }
+
+        public async Task<IEnumerable<Entity.Order>> GetOrderByShipperId(int shipperId)
+        {
+            var orderModel = await context.Orders
+                .Include(o => o.Customer)
+                .Include(o => o.Employee)
+                .AsNoTracking()
+                .Where(o => o.ShipVia == shipperId)
+                .ToListAsync();
+
+            return mapper.Map<IEnumerable<Entity.Order>>(orderModel);
+        }
+
+        public async Task<IEnumerable<Entity.Order>> GetOrderByEmployeeId(int employeeId)
+        {
+            var orderModel = await context.Orders
+                .Include(o => o.Customer)
+                .Include(o => o.ShipViaNavigation)
+                .AsNoTracking()
+                .Where(o => o.EmployeeId == employeeId)
+                .ToListAsync();
+
+            return mapper.Map<IEnumerable<Entity.Order>>(orderModel);
         }
     }
 }

@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using NorthWindTraders.Api.Middlewares;
 using NorthWindTraders.Application;
+using NorthWindTraders.Application.CustomExceptions;
 using NorthWindTraders.Infra;
 using NorthWindTraders.Infra.Persistence;
 
@@ -17,6 +19,22 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.SuppressModelStateInvalidFilter = true;
+    // OR customize the response:
+    options.InvalidModelStateResponseFactory = context =>
+    {
+        var errors = context.ModelState
+            .Where(e => e.Value.Errors.Count > 0)
+            .SelectMany(x => x.Value.Errors)
+            .Select(x => x.ErrorMessage)
+            .ToList();
+
+        throw new BadRequestException("Validation errors occurred.", errors);
+    };
+});
 
 var app = builder.Build();
 

@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using System.Text.Json;
+using Microsoft.AspNetCore.Http.HttpResults;
 using NorthWindTraders.Application.CustomExceptions;
 
 namespace NorthWindTraders.Api.Middlewares
@@ -22,6 +23,7 @@ namespace NorthWindTraders.Api.Middlewares
         {
             var statusCode = HttpStatusCode.InternalServerError;
             var details = string.Empty;
+            var errors = new List<string>();
             switch (ex)
             {
                 case ConflictException:
@@ -33,15 +35,16 @@ namespace NorthWindTraders.Api.Middlewares
                 case NotFoundException:
                     statusCode = HttpStatusCode.NotFound;
                     break;
-                case BadRequestException:
+                case BadRequestException badRequestEx:
                     statusCode = HttpStatusCode.BadRequest;
+                    errors = badRequestEx.Errors;
                     break;
                 default:
                     details = ex.StackTrace ?? "";
                     break;
             }
 
-            var response = new { message = ex.Message, statusCode, details };
+            var response = new { message = ex.Message, statusCode, details, errors };
             
             context.Response.StatusCode = (int)statusCode;
             if (statusCode == HttpStatusCode.NoContent)

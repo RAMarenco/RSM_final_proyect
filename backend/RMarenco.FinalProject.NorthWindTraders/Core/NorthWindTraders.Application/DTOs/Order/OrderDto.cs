@@ -1,6 +1,7 @@
 ﻿using NorthWindTraders.Application.DTOs.Customer;
 using NorthWindTraders.Application.DTOs.Employee;
 using NorthWindTraders.Application.DTOs.Shipper;
+using System.Text.Json.Serialization;
 
 namespace NorthWindTraders.Application.DTOs.Order
 {
@@ -11,8 +12,11 @@ namespace NorthWindTraders.Application.DTOs.Order
         public string ShipAddress { get; set; }
         public string ShipCity { get; set; }
         public string ShipCountry { get; set; }
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public CustomerDto Customer { get; set; }
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public EmployeeDto Employee { get; set; }
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public ShipperDto Shipper { get; set; }
     }
 }

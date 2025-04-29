@@ -17,8 +17,11 @@ namespace NorthWindTraders.Application
             services.AddAutoMapper(typeof(ShipperProfile));
 
             // Servicios
-            services.AddScoped<IOrderDetailService, OrderDetailService>();
             services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped(provider => new Lazy<IOrderService>(() => provider.GetRequiredService<IOrderService>()));
+            services.AddScoped<ICustomerService, CustomerService>();
+            services.AddScoped<IEmployeeService, EmployeeService>();
+            services.AddScoped<IOrderDetailService, OrderDetailService>();
             services.AddScoped<IShipperService, ShipperService>();
             services.AddScoped<IProductService, ProductService>();
 

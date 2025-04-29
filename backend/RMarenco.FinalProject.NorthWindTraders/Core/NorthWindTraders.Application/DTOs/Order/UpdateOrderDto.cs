@@ -2,12 +2,8 @@
 
 namespace NorthWindTraders.Application.DTOs.Order
 {
-    public class CreateOrderDto
+    public class UpdateOrderDto
     {
-        [Required(ErrorMessage = "Customer is required.")]
-        public string CustomerID { get; set; }
-        [Required(ErrorMessage = "Employee is required.")]
-        public int EmployeeID { get; set; }
         [Required(ErrorMessage = "Order Date is required.")]
         public DateTime OrderDate { get; set; }
         [Required(ErrorMessage = "Ship Via is required.")]
@@ -26,6 +22,6 @@ namespace NorthWindTraders.Application.DTOs.Order
         [Required(ErrorMessage = "Country is required.")]
         [StringLength(15, ErrorMessage = "Country can't be longer than 15 characters.")]
         public string ShipCountry { get; set; }
-        public List<OrderItemDto> Products { get; set; } = new List<OrderItemDto>();
+        public List<OrderItemDto> Products { get; set; } = [];
     }
 }
