@@ -8,7 +8,7 @@ using NorthWindTraders.Domain.Interfaces;
 
 namespace NorthWindTraders.Application.Services
 {
-    class EmployeeService(IEmployeeRepository employeeRepository, Lazy<IOrderService> orderService, IMapper mapper) : IEmployeeService
+    public class EmployeeService(IEmployeeRepository employeeRepository, Lazy<IOrderService> orderService, IMapper mapper) : IEmployeeService
     {
         public async Task<IEnumerable<EmployeeDto>> GetAllEmployees()
         {

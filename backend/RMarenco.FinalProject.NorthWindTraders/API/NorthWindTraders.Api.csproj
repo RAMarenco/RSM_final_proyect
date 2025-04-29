@@ -19,4 +19,7 @@
     <ProjectReference Include="..\Infra\NorthWindTraders.Infra\NorthWindTraders.Infra.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="NorthWindTraders.Api.Tests" />
+  </ItemGroup>
 </Project>

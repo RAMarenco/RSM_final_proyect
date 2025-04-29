@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NorthWindTraders.Applicatio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NorthWindTraders.Domain", "Core\NorthWindTraders.Domain\NorthWindTraders.Domain.csproj", "{711A1FC0-B208-41D9-8567-16C4C49D5ACD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NorthWindTraders.Application.Tests", "Tests\NorthWindTraders.Application.Tests\NorthWindTraders.Application.Tests.csproj", "{65E06286-0DF5-4EAB-8FEA-27E2B7CE3293}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NorthWindTraders.Api.Tests", "Tests\NorthWindTraders.Api.Tests\NorthWindTraders.Api.Tests.csproj", "{7D61695A-F7EA-476B-A835-EB2D42F5E5EB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{711A1FC0-B208-41D9-8567-16C4C49D5ACD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{711A1FC0-B208-41D9-8567-16C4C49D5ACD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{711A1FC0-B208-41D9-8567-16C4C49D5ACD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65E06286-0DF5-4EAB-8FEA-27E2B7CE3293}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65E06286-0DF5-4EAB-8FEA-27E2B7CE3293}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65E06286-0DF5-4EAB-8FEA-27E2B7CE3293}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65E06286-0DF5-4EAB-8FEA-27E2B7CE3293}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D61695A-F7EA-476B-A835-EB2D42F5E5EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D61695A-F7EA-476B-A835-EB2D42F5E5EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D61695A-F7EA-476B-A835-EB2D42F5E5EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D61695A-F7EA-476B-A835-EB2D42F5E5EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

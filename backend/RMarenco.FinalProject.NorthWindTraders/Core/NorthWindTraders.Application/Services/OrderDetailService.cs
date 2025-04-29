@@ -7,7 +7,7 @@ using NorthWindTraders.Domain.Interfaces;
 
 namespace NorthWindTraders.Application.Services
 {
-    class OrderDetailService(
+    public class OrderDetailService(
         IOrderDetailRepository orderDetailRepository, 
         IProductRepository productRepository
     ) : IOrderDetailService

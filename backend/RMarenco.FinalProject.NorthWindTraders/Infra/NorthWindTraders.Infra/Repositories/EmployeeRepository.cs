@@ -10,7 +10,7 @@ namespace NorthWindTraders.Infra.Repositories
     {
         public async Task<IEnumerable<Employee>> GetAllEmployees()
         {
-            var employeeModel = await context.Products
+            var employeeModel = await context.Employees
                 .AsNoTracking()
                 .ToListAsync();
 
