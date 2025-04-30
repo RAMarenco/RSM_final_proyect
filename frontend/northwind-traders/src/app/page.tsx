@@ -1,5 +1,6 @@
+"use client";
+import Order from "@/app/order/page";
+
 export default function Home() {
-  return (
-    <div>a</div>
-  );
+  return <Order/>;
 }

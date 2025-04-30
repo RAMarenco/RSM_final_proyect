@@ -1,16 +1,11 @@
+import { ButtonProps } from "@/types/button";
 import React from "react";
 
-interface ButtonProps {
-  type: "button" | "submit" | "reset";
-  children: React.ReactNode;
-  onClick?: () => void;
-}
-
-const DefaultButton: React.FC<ButtonProps> = ({ type, children, onClick }) => {
+const DefaultButton: React.FC<ButtonProps> = ({ type, children, onClick, className }) => {
   return (
     <button
       type={type}
-      className="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2"
+      className={`text-white bg-primary-500 hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center disabled:opacity-50 hover:cursor-pointer ease-in-out duration-300 ${className}`}
       onClick={onClick}
     >
       {children}

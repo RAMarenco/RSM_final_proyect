@@ -1,3 +1,4 @@
+"use client"
 import Link from "next/link";
 import TransparentButton from "../Button/TransparentButton";
 import { Menu } from "../Menu/Menu";
@@ -13,9 +14,9 @@ const Header = ({
   menuActive: boolean;
 }) => {
   return (
-    <header className="flex flex-row justify-between py-4 px-6">
+    <header className="flex flex-row justify-between py-2 px-6">
       <Link href="/" className="z-20">
-        <Image src="/Logo.png" width={200} height={100} alt="Northwind traders logo"/>
+        <Image src="/Logo.png" width={200} height={55.47} alt="Northwind traders logo"/>
       </Link>
       <TransparentButton
         type="button"
