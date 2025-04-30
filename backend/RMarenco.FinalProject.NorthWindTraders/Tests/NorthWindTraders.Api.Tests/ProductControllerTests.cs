@@ -2,6 +2,8 @@ using Xunit;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Testing;
+using System.Net.Http.Json;
+using NorthWindTraders.Domain.Entities;
 
 namespace NorthWindTraders.Api.Tests
 {
@@ -15,13 +17,16 @@ namespace NorthWindTraders.Api.Tests
         }
 
         [Fact]
-        public async Task GetProducts_ShouldReturnOk()
+        public async Task GetProducts_ShouldReturnOkWithProducts()
         {
             // Act
             var response = await _client.GetAsync("/api/Product");
 
             // Assert
             response.EnsureSuccessStatusCode();
+            var products = await response.Content.ReadFromJsonAsync<IEnumerable<Product>>();
+            Assert.NotNull(products);
+            Assert.NotEmpty(products);
         }
     }
 }

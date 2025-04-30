@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Text.RegularExpressions;
@@ -11,10 +13,13 @@ namespace NorthWindTraders.Infra.Persistence
         private readonly ILogger _logger = logger;
         public async Task InitializeAsync(AppDbContext dbContext)
         {
-            // Ensure the database is created
-            await dbContext.Database.EnsureCreatedAsync();
+            _logger.LogInformation("Verifying Database...");
 
-            // Check if Northwind already exists
+            // 1. Ensure database exists without creating tables
+            await EnsureDatabaseExistsAsync(dbContext);
+
+            // 2. Check if tables exist (your existing code)
+            _logger.LogInformation("Verifying Data...");
             var connection = dbContext.Database.GetDbConnection();
             await connection.OpenAsync();
 
@@ -25,10 +30,8 @@ namespace NorthWindTraders.Infra.Persistence
             if (result == 0)
             {
                 _logger.LogInformation("Northwind data not found. Executing SQL script...");
-
                 var filePath = Path.Combine("Scripts", _scriptSettings.FileName);
 
-                // Check if the file exists before reading
                 if (!File.Exists(filePath))
                 {
                     _logger.LogError($"SQL script file not found: {filePath}");
@@ -57,6 +60,37 @@ namespace NorthWindTraders.Infra.Persistence
                     _logger.LogInformation($"Executing command: {command}");
                     await dbContext.Database.ExecuteSqlRawAsync(command);
                 }
+            }
+        }
+
+        private async Task EnsureDatabaseExistsAsync(AppDbContext dbContext)
+        {
+            var connection = dbContext.Database.GetDbConnection();
+            var databaseName = connection.Database;
+            var originalConnectionString = connection.ConnectionString;
+
+            var masterConnectionString = new SqlConnectionStringBuilder(originalConnectionString)
+            {
+                InitialCatalog = "master"
+            }.ToString();
+
+            await using var masterConnection = new SqlConnection(masterConnectionString);
+            await masterConnection.OpenAsync();
+
+            // Verificar si la base ya existe
+            await using var checkCommand = masterConnection.CreateCommand();
+            checkCommand.CommandText = $"SELECT COUNT(*) FROM sys.databases WHERE name = '{databaseName}'";
+            var exists = (int)await checkCommand.ExecuteScalarAsync() > 0;
+
+            if (!exists)
+            {
+                _logger.LogInformation("Database not found. Creating...");
+
+                await using var createCommand = masterConnection.CreateCommand();
+                createCommand.CommandText = $"CREATE DATABASE [{databaseName}]";
+                await createCommand.ExecuteNonQueryAsync();
+
+                _logger.LogInformation("Database created successfully.");
             }
         }
 
