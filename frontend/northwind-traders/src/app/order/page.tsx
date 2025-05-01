@@ -1,13 +1,16 @@
 "use client";
 import { getOrders } from "@/services/orderService";
-import { IPaginatedOrder } from "@/types/Order/order";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import DefaultButton from "@/components/Button/DefaultButton";
 import { toast } from "sonner";
+import Pagination from "@/components/Pagination/Pagination";
+import { IOrder } from "@/types/Order/Order";
+import { IPaginated } from "@/types/Pagination/pagination";
+import Card from "@/components/Card/Card";
 
 export default function Home() {
-  const [orders, setOrders] = useState<IPaginatedOrder>();
+  const [orders, setOrders] = useState<IPaginated<IOrder>>();
   const [currentPage, setCurrentPage] = useState(1);
   const router = useRouter();
 
@@ -40,72 +43,6 @@ export default function Home() {
     router.push("/order/create");
   };
 
-  const renderPagination = () => {
-    if (!orders || orders.totalPages <= 1) return null;
-
-    const totalPages = orders.totalPages;
-    const pages = [];
-    const maxVisiblePages = 5; // Adjust this number as needed
-
-    // Always add first page
-    pages.push(1);
-
-    // Determine the range of pages to show around current page
-    let startPage = Math.max(2, currentPage - 1);
-    let endPage = Math.min(totalPages - 1, currentPage + 1);
-
-    // Adjust if we're near the start or end
-    if (currentPage <= 3) {
-      endPage = Math.min(4, totalPages - 1);
-    } else if (currentPage >= totalPages - 2) {
-      startPage = Math.max(totalPages - 3, 2);
-    }
-
-    // Add ellipsis if there's a gap between first page and startPage
-    if (startPage > 2) {
-      pages.push('...');
-    }
-
-    // Add middle pages
-    for (let i = startPage; i <= endPage; i++) {
-      pages.push(i);
-    }
-
-    // Add ellipsis if there's a gap between endPage and last page
-    if (endPage < totalPages - 1) {
-      pages.push('...');
-    }
-
-    // Always add last page if there's more than one page
-    if (totalPages > 1) {
-      pages.push(totalPages);
-    }
-
-    const handlePageChange = (page: number) => {
-      setCurrentPage(page);
-    };
-
-    return (
-      <div className="flex justify-center items-center space-x-2">
-        {pages.map((page, index) => (
-          <div key={index}>
-            {page === '...' ? (
-              <span className="px-3 py-1 text-lg pointer-events-none">...</span>
-            ) : (
-              <DefaultButton
-                type="button"
-                onClick={() => handlePageChange(page as number)}
-                className={currentPage === page ? 'bg-gray-600! text-white hover:bg-gray-600! hover:cursor-default!' : 'bg-gray-400! hover:bg-gray-700!'}
-              >
-                {page}
-              </DefaultButton>
-            )}
-          </div>
-        ))}
-      </div>
-    );
-  };
-
   return (
     <div className="w-full grid grid-cols-1 grid-rows-[3rem_1fr_3rem] gap-4">
       <div className="flex justify-between items-center">
@@ -114,12 +51,9 @@ export default function Home() {
           Create New Order
         </DefaultButton>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-x-6 gap-y-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-x-6 gap-y-4 overflow-y-auto pb-4">
         {orders?.data.map((order) => (
-          <div
-            key={order.orderID}
-            className="bg-white shadow-lg rounded-xl p-4 border border-gray-200"
-          >
+          <Card key={order.orderID}>
             <div className="flex items-center justify-between mb-2">
               <h2 className="text-xl font-bold">
                 #{order.orderID}
@@ -181,14 +115,11 @@ export default function Home() {
               <DefaultButton type="button" onClick={() => handleViewOrder(order.orderID)}>
                 View
               </DefaultButton>
-              <DefaultButton type="button" onClick={() => handleEditOrder(order.orderID)}>
-                Edit
-              </DefaultButton>
             </div>
-          </div>
+          </Card>
         ))}
       </div>
-      {renderPagination()}
+      {orders && <Pagination data={orders} currentPage={currentPage} setCurrentPage={setCurrentPage}/>}
     </div>
   );
 }

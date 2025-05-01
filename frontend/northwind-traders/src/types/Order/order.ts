@@ -16,13 +16,6 @@ export interface IOrder {
   employee?: IEmployee;
 }
 
-export interface IPaginatedOrder {
-  data: IOrder[];
-  totalPages: number;
-  currentPage: number;
-  totalItems: number;
-}
-
 export interface IOrderWithDetails {
   order: IOrder;
   orderDetails: IOrderDetail[];

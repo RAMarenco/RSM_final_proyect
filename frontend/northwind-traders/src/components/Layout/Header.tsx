@@ -3,6 +3,7 @@ import Link from "next/link";
 import TransparentButton from "../Button/TransparentButton";
 import { Menu } from "../Menu/Menu";
 import Image from "next/image";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/16/solid";
 
 const Header = ({
   items,
@@ -20,10 +21,10 @@ const Header = ({
       </Link>
       <TransparentButton
         type="button"
-        className={`hidden bg-gray-100 max-lg:flex absolute size-10 right-4 shadow-lg items-center justify-center border-b-2 border-transparent rounded-full hover:text-gray-600 z-20`}
+        className={`hidden bg-gray-100 max-lg:flex absolute size-10 right-4 shadow-lg items-center justify-center border-transparent rounded-full hover:text-gray-600 z-20`}
         onClick={() => setMenuActive(!menuActive)}
       >
-        {menuActive ? (<i className="fa-solid fa-x text-md"></i>) : (<i className="fa-solid fa-bars text-md"></i>)}
+        {menuActive ? (<XMarkIcon className="h-5 w-5"/>) : (<Bars3Icon className="h-5 w-5"/>)}
       </TransparentButton>
       <div className={`ease-in-out duration-500 max-lg:bg-gray-900/50`}>
         <Menu items={items} menuActive={menuActive}/>

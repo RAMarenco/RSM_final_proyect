@@ -8,7 +8,7 @@ import Footer from "./Layout/Footer";
 
 export default function ClientWrapper({ children }: { children: ReactNode }) {
   const [menuActive, setMenuActive] = useState<boolean>(false);
-  const items = ["Orders", "Customers", "Employees", "Shippers"];
+  const items = ["order", "customer", "employee", "shipper"];
 
   return (
     <Body>
