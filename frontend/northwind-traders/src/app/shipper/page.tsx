@@ -42,7 +42,7 @@ const Employee = () => {
       ) : (
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           {shippers.map((shipper: IShipper) => (
-            <Card key={shipper.shipperID} className="border p-4 rounded shadow">
+            <Card key={shipper.shipperID}>
               <h2 className="text-xl font-semibold">{shipper.companyName}</h2>
               <div className="mt-3">
                 <DefaultButton type="button" onClick={() => handleViewOrders(shipper.shipperID)}>
