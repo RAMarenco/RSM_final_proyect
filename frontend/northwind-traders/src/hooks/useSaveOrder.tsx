@@ -1,5 +1,5 @@
 import { createOrder, updateOrder } from "@/services/orderService";
-import { IUpdateOrderDto } from "@/types/Order/order.dto";
+import { ICreateOrderDto, IUpdateOrderDto } from "@/types/Order/order.dto";
 import { IProductDto } from "@/types/Product/product.dto";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -34,11 +34,9 @@ export const useSaveOrder = ({
     existingOrder?: IUpdateOrderDto;
 }) => {
   const router = useRouter();
-  const order = {
-    customerID,
-    employeeID,
+  const commonFields = {
     shipVia,
-    orderDate: orderDate == "" ? new Date().toISOString() : orderDate,
+    orderDate: orderDate === "" ? new Date().toISOString() : orderDate,
     shipAddress: address,
     shipCity: addressFields.shipCity,
     shipRegion: addressFields.shipRegion,
@@ -49,7 +47,12 @@ export const useSaveOrder = ({
 
   return () => {
     if (mode === "create") {
-      createOrder(order).then((response) => {
+      const createOrderDto: ICreateOrderDto = {
+        customerID,
+        employeeID,
+        ...commonFields,
+      };
+      createOrder(createOrderDto).then((response) => {
         toast.success("Order created successfully");
         const match = response.match(/Order:\s*(\d+)/);
         if (match) router.push(`/order/${match[1]}`);
@@ -59,7 +62,10 @@ export const useSaveOrder = ({
         }
       });
     } else if (mode === "edit" && existingOrder) {
-      updateOrder(orderID!, order as IUpdateOrderDto).then(() => {
+      const updateOrderDto: IUpdateOrderDto = {
+        ...commonFields,
+      };
+      updateOrder(orderID!, updateOrderDto).then(() => {
         toast.success("Order updated successfully");
         router.push(`/order/${orderID}`);
       }).catch((error) => {
