@@ -7,6 +7,7 @@ import { IEmployee } from "@/types/Employee/employee";
 import { getEmployees } from "@/services/employeeService";
 import { IShipper } from "@/types/Shipper/shipper";
 import { getShippers } from "@/services/shipperService";
+import Card from "@/components/Card/Card";
 
 const Employee = () => {
   const [shippers, setShippers] = useState<IShipper[]>([]);
@@ -41,14 +42,14 @@ const Employee = () => {
       ) : (
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           {shippers.map((shipper: IShipper) => (
-            <div key={shipper.shipperID} className="border p-4 rounded shadow">
+            <Card key={shipper.shipperID} className="border p-4 rounded shadow">
               <h2 className="text-xl font-semibold">{shipper.companyName}</h2>
               <div className="mt-3">
                 <DefaultButton type="button" onClick={() => handleViewOrders(shipper.shipperID)}>
                   View Orders
                 </DefaultButton>
               </div>
-            </div>
+            </Card>
           ))}
         </div>
       )}

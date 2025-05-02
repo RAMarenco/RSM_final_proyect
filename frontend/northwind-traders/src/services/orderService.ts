@@ -36,13 +36,33 @@ export const getOrderByIdReport = async (id: number) => {
 }
 
 export const createOrder = async (data: ICreateOrderDto) => {
-  const response = await api.post(`Order`, data);
-  return response.data;
+  try {
+    const response = await api.post(`Order`, data);
+    return response.data;
+  } catch (error: any) {
+    if (error.response?.status === 400) {
+      throw {
+        type: "validation",
+        messages: error.response.data.errors,
+      };
+    }
+    throw error; 
+  }
 }
 
 export const updateOrder = async (id: number, data: IUpdateOrderDto) => {
-  const response = await api.put(`Order/${id}`, data);
-  return response.data;
+  try {
+    const response = await api.post(`Order/${id}`, data);
+    return response.data;
+  } catch (error: any) {
+    if (error.response?.status === 400) {
+      throw {
+        type: "validation",
+        messages: error.response.data.errors,
+      };
+    }
+    throw error; 
+  }
 }
 
 export const deleteOrder = async (id: number) => {

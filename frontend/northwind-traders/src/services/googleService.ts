@@ -21,3 +21,17 @@ export const geocodeAddress = async (fullAddress : string) => {
     toast.error("Error geocoding address");
   }
 };
+
+export const validateAddress = async (address: string) => {
+  try {
+    const response = await axios.post(`https://addressvalidation.googleapis.com/v1:validateAddress?key=${MAP_KEY}`, {
+      "address": {
+        "addressLines": [address]
+      }
+    });
+
+    return response;
+  } catch (error) {
+    toast.error("Error validating address");
+  }
+}

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import DefaultButton from "@/components/Button/DefaultButton";
 import { getCustomers } from "@/services/customerService";
 import { ICustomer } from "@/types/Customer/customer";
+import Card from "@/components/Card/Card";
 
 const Customer = () => {
   const [customers, setCustomers] = useState<ICustomer[]>([]);
@@ -39,14 +40,14 @@ const Customer = () => {
       ) : (
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           {customers.map((customer: ICustomer) => (
-            <div key={customer.customerID} className="border p-4 rounded shadow">
+            <Card key={customer.customerID} >
               <h2 className="text-xl font-semibold">{customer.companyName}</h2>
               <div className="mt-3">
                 <DefaultButton type="button" onClick={() => handleViewOrders(customer.customerID)}>
                   View Orders
                 </DefaultButton>
               </div>
-            </div>
+            </Card>
           ))}
         </div>
       )}

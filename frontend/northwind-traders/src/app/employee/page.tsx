@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import DefaultButton from "@/components/Button/DefaultButton";
 import { IEmployee } from "@/types/Employee/employee";
 import { getEmployees } from "@/services/employeeService";
+import Card from "@/components/Card/Card";
 
 const Employee = () => {
   const [employees, setEmployees] = useState<IEmployee[]>([]);
@@ -39,14 +40,14 @@ const Employee = () => {
       ) : (
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           {employees.map((employee: IEmployee) => (
-            <div key={employee.employeeID} className="border p-4 rounded shadow">
+            <Card key={employee.employeeID}>
               <h2 className="text-xl font-semibold">{employee.lastName} {employee.firstName}</h2>
               <div className="mt-3">
                 <DefaultButton type="button" onClick={() => handleViewOrders(employee.employeeID)}>
                   View Orders
                 </DefaultButton>
               </div>
-            </div>
+            </Card>
           ))}
         </div>
       )}

@@ -1,13 +1,13 @@
 "use client"
 import DefaultButton from "@/components/Button/DefaultButton";
-import { MAP_KEY } from "@/consts/consts";
+import { MAP_ID, MAP_KEY } from "@/consts/consts";
 import { geocodeAddress } from "@/services/googleService";
-import { deleteOrder, getOrderByIdReport, getOrdersWithDetails } from "@/services/orderService";
+import { getOrderByIdReport, getOrdersWithDetails } from "@/services/orderService";
 import { getProducts } from "@/services/productService";
 import { IOrder, IOrderWithDetails } from "@/types/Order/Order";
 import { IOrderDetail } from "@/types/OrderDetail/orderDetail";
 import { IProduct } from "@/types/Product/product";
-import { APIProvider, Map, Marker } from "@vis.gl/react-google-maps";
+import { AdvancedMarker, APIProvider, Map } from "@vis.gl/react-google-maps";
 import { useParams, useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
@@ -124,7 +124,7 @@ const OrderDetailPage = () => {
     <div className="w-full">
       <div className="flex justify-between items-center h-[3rem] justify-end">
         <div className="flex gap-4">
-          <DefaultButton type="button" onClick={handleGenerateReport} className="bg-primary-dark-600! hover:bg-primary-dark-700!">
+          <DefaultButton type="button" onClick={handleGenerateReport} outline>
             <span className="md:hidden"><DocumentArrowDownIcon className="h-5 w-5"/></span>
             <span className="hidden md:inline">Generate Report</span>
           </DefaultButton>
@@ -228,6 +228,7 @@ const OrderDetailPage = () => {
               {MAP_KEY && (
                 <APIProvider apiKey={MAP_KEY}>
                   <Map 
+                    mapId={MAP_ID}
                     className="h-[30rem]" 
                     defaultZoom={15} 
                     center={geocodedLocation}
@@ -236,7 +237,7 @@ const OrderDetailPage = () => {
                     mapTypeControl={true}
                     zoomControl={true}
                   >
-                    <Marker position={geocodedLocation} />
+                    <AdvancedMarker position={geocodedLocation} />
                   </Map>
                 </APIProvider>
               )}
