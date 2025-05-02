@@ -53,11 +53,19 @@ export const useSaveOrder = ({
         toast.success("Order created successfully");
         const match = response.match(/Order:\s*(\d+)/);
         if (match) router.push(`/order/${match[1]}`);
+      }).catch((error) => {
+        for(const errorMessage in error.messages) {
+          toast.error("Error creating order: " + error.messages[errorMessage]);
+        }
       });
     } else if (mode === "edit" && existingOrder) {
       updateOrder(orderID!, order as IUpdateOrderDto).then(() => {
         toast.success("Order updated successfully");
         router.push(`/order/${orderID}`);
+      }).catch((error) => {
+        for(const errorMessage in error.messages) {
+          toast.error("Error updating order: " + error.messages[errorMessage]);
+        }
       });
     }
   }
