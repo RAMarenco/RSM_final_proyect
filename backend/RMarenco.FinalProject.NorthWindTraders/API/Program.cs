@@ -5,6 +5,7 @@ using NorthWindTraders.Application;
 using NorthWindTraders.Application.CustomExceptions;
 using NorthWindTraders.Infra;
 using NorthWindTraders.Infra.Persistence;
+using QuestPDF.Infrastructure;
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 var builder = WebApplication.CreateBuilder(args);
@@ -20,6 +21,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+QuestPDF.Settings.License = LicenseType.Community;
 
 builder.Services.Configure<ApiBehaviorOptions>(options =>
 {
@@ -42,7 +44,10 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: MyAllowSpecificOrigins,
         policy =>
         {
-            policy.WithOrigins("http://localhost:3000");
+            policy.WithOrigins("http://localhost:3000")
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+
         });
 });
 

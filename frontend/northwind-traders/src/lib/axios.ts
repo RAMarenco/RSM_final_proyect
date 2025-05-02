@@ -1,6 +1,6 @@
+import { API_URL } from "@/consts/consts";
 import axios from "axios";
 import { toast } from "sonner";
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 const api = axios.create({
   baseURL: `${API_URL}`,

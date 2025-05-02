@@ -47,10 +47,17 @@ namespace NorthWindTraders.Infra.Repositories
                 .Include(o => o.ShipViaNavigation)
                 .AsQueryable();
 
-            var (pagedOrders, totalPages, currentPage, totalItems) = await paginationHelper.PaginateAsync(pageNumber, pageSize, orderQuery);
-            var mappedOrders = mapper.Map<IEnumerable<Entity.Order>>(pagedOrders);
+            if (pageSize == 0)
+            {
+                var allOrders = await orderQuery.ToListAsync();
+                var mappedOrders = mapper.Map<IEnumerable<Entity.Order>>(allOrders);
+                return (mappedOrders, 1, 1, mappedOrders.Count());
+            }
 
-            return (mappedOrders, totalPages, currentPage, totalItems);
+            var (pagedOrders, totalPages, currentPage, totalItems) = await paginationHelper.PaginateAsync(pageNumber, pageSize, orderQuery);
+            var mappedPaged = mapper.Map<IEnumerable<Entity.Order>>(pagedOrders);
+
+            return (mappedPaged, totalPages, currentPage, totalItems);
         }
 
         public async Task<Entity.Order> GetOrderById(int orderId)

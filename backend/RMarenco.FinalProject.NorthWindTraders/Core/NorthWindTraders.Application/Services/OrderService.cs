@@ -15,6 +15,7 @@ namespace NorthWindTraders.Application.Services
         IShipperService shipperService,
         IProductService productService,
         IOrderDetailService orderDetailService,
+        IOrderReportService orderReportService,
         IMapper mapper
     ) : IOrderService
     {
@@ -99,6 +100,24 @@ namespace NorthWindTraders.Application.Services
             };
         }
 
+        public async Task<byte[]> GenerateAllOrderReport()
+        {
+            List<OrderWithDetailsDto> ordersWithDetails = [];
+            var (orders, totalPages, currentPage, totalItems) = await orderRepository.GetAllOrders(0, 0);
+            foreach(var order in orders)
+            {
+                IEnumerable<OrderDetail> orderDetails = await orderDetailService.GetOrderDetailsByOrderId(order.OrderID);
+                ordersWithDetails.Add(new OrderWithDetailsDto
+                    {
+                        Order = mapper.Map<OrderDto>(order),
+                        OrderDetails = mapper.Map<List<OrderDetailDto>>(orderDetails)
+                    }
+                );
+            }
+            var pdfContent = await orderReportService.GenerateOrderReportAsync(ordersWithDetails);
+            return pdfContent;
+        }
+
         public async Task<int> UpdateOrder(int orderId, UpdateOrderDto updateOrderDto)
         {
             Order? order = await orderRepository.GetOrderById(orderId);
@@ -137,6 +156,23 @@ namespace NorthWindTraders.Application.Services
             {
                 await productService.GetProductById(product.ProductId);
             }
+        }
+
+        public async Task<byte[]> GenerateOrderReport(int orderId)
+        {
+            List<OrderWithDetailsDto> ordersWithDetails = [];
+
+            Order order = await GetOrderById(orderId);
+            IEnumerable<OrderDetail> orderDetails = await orderDetailService.GetOrderDetailsByOrderId(orderId);
+            ordersWithDetails.Add(new OrderWithDetailsDto
+                {
+                    Order = mapper.Map<OrderDto>(order),
+                    OrderDetails = mapper.Map<List<OrderDetailDto>>(orderDetails)
+                }
+            );
+
+            var pdfContent = await orderReportService.GenerateOrderReportAsync(ordersWithDetails);
+            return pdfContent;
         }
     }
 }

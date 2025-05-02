@@ -14,6 +14,8 @@ namespace NorthWindTraders.Application.Interfaces
         Task<IEnumerable<Order>> GetOrderByEmployeeId(int employeeId);
         Task<int> AddOrder(CreateOrderDto createOrderDto);
         Task<int> UpdateOrder(int orderId, UpdateOrderDto updateOrderDto);
+        Task<byte[]> GenerateAllOrderReport();
+        Task<byte[]> GenerateOrderReport(int orderId);
         Task DeleteOrder(int orderId);
     }
 }

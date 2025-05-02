@@ -7,6 +7,7 @@ using AutoMapper;
 using NorthWindTraders.Application.CustomExceptions;
 using NorthWindTraders.Application.DTOs.Order;
 using NorthWindTraders.Domain.Entities;
+using NorthWindTraders.Infra.Reports;
 
 namespace NorthWindTraders.Application.Tests
 {
@@ -18,6 +19,7 @@ namespace NorthWindTraders.Application.Tests
         private readonly Mock<IShipperService> _shipperServiceMock;
         private readonly Mock<IProductService> _productServiceMock;
         private readonly Mock<IOrderDetailService> _orderDetailServiceMock;
+        private readonly Mock<IOrderReportService> _orderReportService;
         private readonly Mock<IMapper> _mapperMock;
         private readonly OrderService _orderService;
 
@@ -29,6 +31,7 @@ namespace NorthWindTraders.Application.Tests
             _shipperServiceMock = new Mock<IShipperService>();
             _productServiceMock = new Mock<IProductService>();
             _orderDetailServiceMock = new Mock<IOrderDetailService>();
+            _orderReportService = new Mock<IOrderReportService>();
             _mapperMock = new Mock<IMapper>();
             _orderService = new OrderService(
                 _orderRepositoryMock.Object, 
@@ -37,6 +40,7 @@ namespace NorthWindTraders.Application.Tests
                 _shipperServiceMock.Object, 
                 _productServiceMock.Object,
                 _orderDetailServiceMock.Object,
+                _orderReportService.Object,
                 _mapperMock.Object
             );
         }

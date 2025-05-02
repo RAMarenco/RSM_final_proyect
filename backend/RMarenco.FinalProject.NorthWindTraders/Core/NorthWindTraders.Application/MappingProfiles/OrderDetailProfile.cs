@@ -8,7 +8,8 @@ namespace NorthWindTraders.Application.MappingProfiles
     {
         public OrderDetailProfile()
         {
-            CreateMap<OrderDetail, OrderDetailDto>();
+            CreateMap<OrderDetail, OrderDetailDto>()
+                .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.Product.ProductName));
         }
     }
 }

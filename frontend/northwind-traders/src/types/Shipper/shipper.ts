@@ -7,6 +7,6 @@ export interface IShipper {
 }
 
 export interface IShipperWithOrders {
-  employee: IShipper;
+  shipper: IShipper;
   orders: IOrder[];
 }

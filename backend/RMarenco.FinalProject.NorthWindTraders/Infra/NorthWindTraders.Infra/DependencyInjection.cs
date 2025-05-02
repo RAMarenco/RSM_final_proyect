@@ -37,7 +37,6 @@ namespace NorthWindTraders.Infra
             // Register PaginationHelper for Dependency Injection
             services.AddTransient<IPaginationHelper, PaginationHelper>();
 
-
             return services;
         }
     }

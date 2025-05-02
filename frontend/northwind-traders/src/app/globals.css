@@ -23,6 +23,7 @@
   --color-primary-dark-700: #00487e;
   --color-primary-dark-800: #003a66;
   --color-primary-dark-900: #00294b;
+  --color-overlay: rgba(255, 255, 255, 0.5);
 }
 
 @theme inline {
@@ -53,6 +54,7 @@
   --color-primary-dark-700: var(--color-primary-dark-700);
   --color-primary-dark-800: var(--color-primary-dark-800);
   --color-primary-dark-900: var(--color-primary-dark-900);
+  --color-overlay: var(--color-overlay);
 }
 
 /*@media (prefers-color-scheme: dark) {

@@ -5,7 +5,7 @@ export const getCustomers = async () => {
   return response.data;
 };
 
-export const getCustomerWithOrders = async (id: number) => {
+export const getCustomerWithOrders = async (id: string) => {
   const response = await api.get(`Customer/${id}`);
   return response.data;
 };

@@ -11,8 +11,32 @@ export const getOrdersWithDetails = async (id: number) => {
   return response.data;
 }
 
-export const createOrder = async (id: number, data: ICreateOrderDto) => {
-  const response = await api.post(`Order/${id}`, data);
+export const getOrdersReport = async () => {
+  const response = await api.get(`Order/report`, {
+    responseType: 'blob',  // Ensure the response is treated as a blob
+  });
+
+  // Create a URL for the PDF blob content
+  const fileURL = URL.createObjectURL(response.data);
+
+  // Open the PDF in a new tab
+  window.open(fileURL, '_blank');
+}
+
+export const getOrderByIdReport = async (id: number) => {
+  const response = await api.get(`Order/report/${id}`, {
+    responseType: 'blob',  // Ensure the response is treated as a blob
+  });
+
+  // Create a URL for the PDF blob content
+  const fileURL = URL.createObjectURL(response.data);
+
+  // Open the PDF in a new tab
+  window.open(fileURL, '_blank');
+}
+
+export const createOrder = async (data: ICreateOrderDto) => {
+  const response = await api.post(`Order`, data);
   return response.data;
 }
 

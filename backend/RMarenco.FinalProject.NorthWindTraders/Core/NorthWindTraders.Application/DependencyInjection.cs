@@ -2,6 +2,8 @@
 using NorthWindTraders.Application.Interfaces;
 using NorthWindTraders.Application.MappingProfiles;
 using NorthWindTraders.Application.Services;
+using NorthWindTraders.Domain.Interfaces;
+using NorthWindTraders.Infra.Reports;
 
 namespace NorthWindTraders.Application
 {
@@ -24,6 +26,7 @@ namespace NorthWindTraders.Application
             services.AddScoped<IOrderDetailService, OrderDetailService>();
             services.AddScoped<IShipperService, ShipperService>();
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IOrderReportService, OrderReportService>();
 
             return services;
         }

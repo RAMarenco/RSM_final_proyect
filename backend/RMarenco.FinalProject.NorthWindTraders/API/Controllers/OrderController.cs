@@ -39,6 +39,30 @@ namespace NorthWindTraders.Api.Controllers
             return Ok(await orderService.GetOrderWithDetails(id));
         }
 
+        [HttpGet]
+        [Route("report")]
+        public async Task<IActionResult> GetOrderReport()
+        {
+            byte[] pdfBytes = await orderService.GenerateAllOrderReport();
+
+            if (pdfBytes == null || pdfBytes.Length == 0)
+                return NotFound("Report generation failed or no data found.");
+
+            return File(pdfBytes, "application/pdf", "OrderReport_.pdf");
+        }
+
+        [HttpGet]
+        [Route("report/{id:int}")]
+        public async Task<IActionResult> GetOrderByIDReport(int id)
+        {
+            byte[] pdfBytes = await orderService.GenerateOrderReport(id);
+
+            if (pdfBytes == null || pdfBytes.Length == 0)
+                return NotFound("Report generation failed or no data found.");
+
+            return File(pdfBytes, "application/pdf", $"OrderReport_{id}.pdf");
+        }
+
         [HttpPut]
         [Route("{id:int}")]
         [Produces("application/json")]
