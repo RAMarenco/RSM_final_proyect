@@ -52,7 +52,7 @@ export const createOrder = async (data: ICreateOrderDto) => {
 
 export const updateOrder = async (id: number, data: IUpdateOrderDto) => {
   try {
-    const response = await api.post(`Order/${id}`, data);
+    const response = await api.put(`Order/${id}`, data);
     return response.data;
   } catch (error: any) {
     if (error.response?.status === 400) {
